@@ -1,0 +1,67 @@
+<?php
+
+/**
+ * Implements hook_block_info()
+ */
+function namu_site_block_info() {
+  $blocks['footer'] = array(
+    'info' => t('Site Footer'),
+  );
+  
+  return $blocks;
+}
+
+/**
+ * Implements hook_block_configure()
+ */
+function namu_site_block_configure($delta = '') {
+  $form = array();
+  
+  switch ($delta) {
+    case 'footer': {
+      $form['footer_text'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Copyright Text'),
+        '#description' => t('Enter text to display to the right of the copyright symbol and year.'),
+        '#default_value' => variable_get('namu_site_footer_text', 'North American Marine Underwriters Inc. All Rights Reserved'),
+      );
+    }
+  }
+  
+  return $form;
+}
+
+/**
+ * Implements hook_block_save()
+ */
+function namu_site_block_save($delta = '', $edit = array()) {
+  switch ($delta) {
+    case 'footer': {
+      if (!empty($edit['footer_text'])) {
+        variable_set('namu_site_footer_text', $edit['footer_copy']);
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_block_view()
+ */
+function namu_site_block_view($delta = '') {
+  $block = array();
+  
+  switch ($delta) {
+    case 'footer': {
+      $footer_text = variable_get('namu_site_footer_text', 'North American Marine Underwriters Inc. All Rights Reserved');
+      
+      $block['subject'] = '';
+      $block['content'] = array(
+        '#markup' => '&copy; ' . date('Y') . $footer_text,
+        '#prefix' => '<p>',
+        '#suffix' => '</p>',
+      );
+    }
+  }
+  
+  return $block;
+}
