@@ -136,13 +136,12 @@
                 <?php endif; ?>
                 
                 <?php print render($title_suffix); ?>
-                
-                <?php if ($page['content_top']): ?>
-                  <div id="top-banner">
+                <div id="top-banner">
+                  <?php if ($page['content_top']): ?>
                     <?php print render($page['content_top']); ?>
-                  </div>
-                  <!-- /#top-banner -->
-                <?php endif; ?>
+                  <?php endif; ?>
+                </div>
+                <!-- /#top-banner -->
               </div>
               <!-- /#namu-content-top -->
             <?php endif; ?>

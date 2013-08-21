@@ -30,7 +30,7 @@ function namu_preprocess_page(&$vars) {
   );
   
   if ($vars['page']['sidebar']) {
-    $vars['namu_attributes']['content']['class'][] = 'with-banner-left';
+    //$vars['namu_attributes']['content']['class'][] = 'with-banner-left';
   }
   
   if ($vars['page']['content_bottom']) {
@@ -38,10 +38,10 @@ function namu_preprocess_page(&$vars) {
   }
   
   if ($vars['page']['content_top']) {
-    $vars['namu_attributes']['content_top']['class'][] = 'with-banner';
+    //$vars['namu_attributes']['content_top']['class'][] = 'with-banner';
   }
   
   if ($vars['page']['subhead']) {
-    $vars['namu_attributes']['title']['class'][] = 'with-subhead';
+    $vars['namu_attributes']['content_top']['class'][] = 'with-subhead';
   }
 }

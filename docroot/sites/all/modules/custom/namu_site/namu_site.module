@@ -1,11 +1,75 @@
 <?php
 
 /**
+ * Implements hook_theme()
+ */
+function namu_site_theme($existing, $type, $theme, $path) {
+  $themes['namu_site__home__banner'] = array(
+    'template' => 'namu-site--home--banner',
+  );
+  
+  $themes['namu_site__home__bio'] = array(
+    'template' => 'namu-site--home--bio',
+  );
+  
+  $themes['namu_site__home__products'] = array(
+    'template' => 'namu-site--home--products',
+  );
+  
+  $themes['namu_site__footer'] = array(
+    'template' => 'namu-site--footer',
+  );
+  
+  foreach ($themes as &$theme) {
+    if (empty($theme['render element']) && !isset($theme['variables'])) {
+      $theme['render element'] = 'e';
+    }
+    
+    if (empty($theme['path'])) {
+      $theme['path'] = $path . '/theme';
+    }
+  }
+  
+  return $themes;
+}
+
+/**
+ * Preprocessor for the home banner
+ */
+function template_preprocess_namu_site__home__banner(&$vars) {
+}
+
+/**
+ * Preprocessor for the home bio panel
+ */
+function template_preprocess_namu_site__home__bio(&$vars) {
+  
+}
+
+/**
+ * Preprocessor for the home products panel
+ */
+function template_preprocess_namu_site__home__products(&$vars) {
+}
+
+/**
  * Implements hook_block_info()
  */
 function namu_site_block_info() {
   $blocks['footer'] = array(
     'info' => t('Site Footer'),
+  );
+  
+  $blocks['home_banner'] = array(
+    'info' => t('Homepage Top Banner'),
+  );
+  
+  $blocks['home_bio'] = array(
+    'info' => t('Homepage Bio Panel'),
+  );
+  
+  $blocks['home_products'] = array(
+    'info' => t('Homepage Products Panel'),
   );
   
   $blocks['twitter_placeholder'] = array(
@@ -22,6 +86,7 @@ function namu_site_block_configure($delta = '') {
   $form = array();
   
   switch ($delta) {
+    // Footer
     case 'footer': {
       $form['footer_text'] = array(
         '#type' => 'textfield',
@@ -30,7 +95,111 @@ function namu_site_block_configure($delta = '') {
         '#default_value' => variable_get('namu_site_footer_text', 'North American Marine Underwriters Inc. All Rights Reserved'),
       );
     }
-    
+    // Home top banner
+    case 'home_banner': {
+      $default = array(
+        'line1' => t('Set a course for complete coverage.'),
+        'line2' => t('Ironclad insurance for marinas, boat dealers and yacht clubs.'),
+      );
+      
+      $home_banner = variable_get('namu_site_home_banner', $default);
+      
+      $form['line1'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Header First Line'),
+        '#default_value' => $home_banner['line1'],
+      );
+      
+      $form['line2'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Header Second Line'),
+        '#default_value' => $home_banner['line2'],
+      );
+      break;
+    }
+    // Home bottom left panel
+    case 'home_bio': {
+      $default = t('Our custom marine insurance programs are designed to ensure tranquility, allowing your clients to focus on their customers. Partners with Hanover Insurance Company since 2001, North American Marine Underwriters provides comprehensive, innovative insurance solutions. Our experienced in-house underwriting staff offers a superior marina program available to both Hanover and non-Hanover agents.');
+      
+      $bio = variable_get('namu_site_home_bio', $default);
+      
+      $form['bio'] = array(
+        '#type' => 'textarea',
+        '#title' => t('Bio Text'),
+        '#default_value' => $bio,
+      );
+      break;
+    }
+    // Home bottom right panel
+    case 'home_products': {
+      $default = array(
+        'label' => t('We offer insurance products for the following:'),
+        'products' => array(
+          t('Marinas'),
+          t('Boat Dealers'),
+          t('Yacht Clubs'),
+        ),
+        'link' => array(
+          'text' => t('For a complete list of our insurance solutions, click here.'),
+          'path' => 'node/9',
+        ),
+      );
+      
+      $panel = variable_get('namu_site_home_products', $default);
+      
+      $form['label'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Label'),
+        '#default_value' => $panel['label'],
+      );
+      
+      $form['products'] = array(
+        '#type' => 'fieldset',
+        '#tree' => TRUE,
+        '#title' => t('Featured Products'),
+        '#description' => t('Enter up to three products to be featured on the homepage.'),
+      );
+      
+      $form['products'][0] = array(
+        '#type' => 'textfield',
+        '#title' => t('Product 1'),
+        '#default_value' => $panel['products'][0],
+        '#required' => TRUE,
+      );
+      
+      $form['products'][1] = array(
+        '#type' => 'textfield',
+        '#title' => t('Product 2'),
+        '#default_value' => !empty($panel['products'][1]) ? $panel['products'][1] : '',
+      );
+      
+      $form['products'][2] = array(
+        '#type' => 'textfield',
+        '#title' => t('Product 3'),
+        '#default_value' => !empty($panel['products'][2]) ? $panel['products'][2] : '',
+      );
+      
+      $form['link'] = array(
+        '#type' => 'fieldset',
+        '#tree' => TRUE,
+        '#title' => t('Link'),
+      );
+      
+      $form['link']['text'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Link Text'),
+        '#default_value' => $panel['link']['text'],
+      );
+      
+      $form['link']['path'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Link Path'),
+        '#default_value' => $panel['link']['path'],
+      );
+      
+      break;
+    }
+    // Twitter placeholder
     case 'twitter_placeholder': {
       $form['twitter_count'] = array(
         '#type' => 'select',
@@ -65,6 +234,58 @@ function namu_site_block_save($delta = '', $edit = array()) {
         variable_set('namu_site_twitter_count', $edit['twitter_count']);
       }
     }
+    // Home top banner
+    case 'home_banner': {
+      if (isset($edit['line1']) && isset($edit['line2'])) {
+        $home_banner = array(
+          'line1' => $edit['line1'],
+          'line2' => $edit['line2'],
+        );
+        
+        variable_set('namu_site_home_banner', $home_banner);
+      }
+      break;
+    }
+    // Home bottom left panel
+    case 'home_bio': {
+      if (isset($edit['bio'])) {
+        variable_set('namu_site_home_bio', $edit['bio']);
+      }
+      
+      break;
+    }
+    // Home bottom right panel
+    case 'home_products': {
+      $default = array(
+        'label' => t('We offer insurance products for the following:'),
+        'products' => array(
+          t('Marinas'),
+          t('Boat Dealers'),
+          t('Yacht Clubs'),
+        ),
+        'link' => array(
+          'text' => t('For a complete list of our insurance solutions, click here.'),
+          'path' => 'node/9',
+        ),
+      );
+      
+      $panel = variable_get('namu_site_home_products', $default);
+      
+      if (isset($edit['label'])) {
+        $panel['label'] = $edit['label'];
+      }
+      
+      if (isset($edit['products'])) {
+        $panel['products'] = $edit['products'];
+      }
+      
+      if (isset($edit['link']['path'])) {
+        $panel['link']['text'] = !empty($edit['link']['text']) ? $edit['link']['text'] : $edit['link']['path'];
+        $panel['link']['path'] = $edit['link']['path'];
+      }
+      
+      break;
+    }
   }
 }
 
@@ -72,21 +293,35 @@ function namu_site_block_save($delta = '', $edit = array()) {
  * Implements hook_block_view()
  */
 function namu_site_block_view($delta = '') {
+  global $_namu_site;
+  
+  if (empty($_namu_site)) {
+    $_namu_site = array(
+      'path' => drupal_get_path('module', 'namu_site'),
+    );
+  }
+  
   $block = array();
   
   switch ($delta) {
+    // Footer
     case 'footer': {
       $footer_text = variable_get('namu_site_footer_text', 'North American Marine Underwriters Inc. All Rights Reserved');
       
       $block['subject'] = '';
       $block['content'] = array(
-        '#markup' => '&copy; ' . date('Y') . $footer_text,
-        '#prefix' => '<p>',
-        '#suffix' => '</p>',
+        '#theme' => 'namu_site__footer',
+        'year' => date('Y'),
+        'text' => t('@footer_text', array('@footer_text' => $footer_text)),
+        'links' => array(
+          l(t('Applications'), 'applications'),
+          l(t('Contact Us'), 'node/11'),
+        ),
       );
       
       break;
     }
+    // Twitter placeholder
     case 'twitter_placeholder': {
       $block['subject'] = t('Latest News');
       
@@ -111,7 +346,146 @@ function namu_site_block_view($delta = '') {
       
       break;
     }
+    // Home top banner
+    case 'home_banner': {
+      $default = array(
+        'line1' => t('Set a course for complete coverage.'),
+        'line2' => t('Ironclad insurance for marinas, boat dealers and yacht clubs.'),
+      );
+      
+      $home_banner = variable_get('namu_site_home_banner', $default);
+      
+      $block['subject'] = '';
+      $block['content'] = $home_banner + array(
+        '#theme' => 'namu_site__home__banner',
+        'title_attributes' => array(
+          'class' => array(
+            'namu-home-banner',
+          ),
+        ),
+      );
+      
+      break;
+    }
+    // Home bottom left panel
+    case 'home_bio': {
+      $default = t('Our custom marine insurance programs are designed to ensure tranquility, allowing your clients to focus on their customers. Partners with Hanover Insurance Company since 2001, North American Marine Underwriters provides comprehensive, innovative insurance solutions. Our experienced in-house underwriting staff offers a superior marina program available to both Hanover and non-Hanover agents.');
+      
+      $bio = variable_get('namu_site_home_bio', $default);
+      
+      $block['subject'] = '';
+      $block['content'] = array(
+        '#theme' => 'namu_site__home__bio',
+        'panel_attributes' => array(
+          'class' => array(
+            'namu-site-home-bottom-panel',
+          ),
+        ),
+        'img' => '<img src="' . $_namu_site['path'] . '/images/col-1-home.jpg' . '" alt="banner image" />',
+        'bio' => $bio,
+      );
+      
+      break;
+    }
+    // Home bottom right panel
+    case 'home_products': {
+      $default = array(
+        'label' => t('We offer insurance products for the following:'),
+        'products' => array(
+          t('Marinas'),
+          t('Boat Dealers'),
+          t('Yacht Clubs'),
+        ),
+        'link' => array(
+          'text' => t('For a complete list of our insurance solutions, click here.'),
+          'path' => 'node/9',
+        ),
+      );
+      
+      $panel = variable_get('namu_site_home_products', $default);
+      
+      if (!empty($panel['link']['path']) || !empty($panel['link']['text'])) {
+        $text = !empty($panel['link']['text']) ? $panel['link']['text'] : $panel['link']['path'];
+        $text = t('@text', array('@text' => $text));
+        
+        if (!empty($panel['link']['path'])) {
+          $path = $panel['link']['path'];
+          $options = array(
+            'attributes' => array(
+              'class' => array(
+                'products-panel-link',
+              ),
+            ),
+          );
+          
+          $panel['link'] = l($text, $path, $options);
+        }
+        else {
+          $panel['link'] = $text;
+        }
+      }
+      elseif (isset($panel['link'])) {
+        unset($panel['link']);
+      }
+      
+      $block['subject'] = '';
+      $block['content'] = $panel + array(
+        '#theme' => 'namu_site__home__products',
+        'panel_attributes' => array(
+          'class' => array(
+            'namu-site-home-bottom-panel',
+          ),
+        ),
+        'img' => '<img src="' . $_namu_site['path'] . '/images/col-2-home.jpg' . '" alt="banner image" />',
+      );
+      
+      break;
+    }
   }
   
   return $block;
+}
+
+/**
+ * Implements template_preprocess_block()
+ */
+function namu_site_preprocess_block(&$vars) {
+  if ($vars['block']->module != 'namu_site') return;
+  
+  $add_classes = array();
+  $home_panels = array('home_bio', 'home_products');
+  
+  if (in_array($vars['block']->delta, $home_panels)) {
+    $add_classes[] = 'home-panel';
+  }
+  
+  switch ($vars['block']->delta) {
+    // Home banner
+    case 'home_banner': {
+      $add_classes[] = 'home-banner';
+      break;
+    }
+    // Home bio panel
+    case 'home_bio': {
+      $add_classes[] = 'home-bio-panel';
+      break;
+    }
+    // Home products panel
+    case 'home_products': {
+      $add_classes[] = 'home-products-panel';
+      break;
+    }
+  }
+  
+  foreach ($add_classes as $class) {
+    if (!in_array($class, $vars['classes_array'])) {
+      $vars['classes_array'][] = $class;
+    }
+  }
+}
+
+/**
+ * Implements hook_form_alter()
+ */
+function namu_site_form_alter(&$form, &$form_state) {
 }

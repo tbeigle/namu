@@ -23,3 +23,4 @@ scripts[] = scripts/js/main.js
 ; CSS
 stylesheets[all][] = styles/css/fonts.css
 stylesheets[all][] = styles/css/style.css
+stylesheets[all][] = styles/css/forms.css

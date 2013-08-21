@@ -1,0 +1,5 @@
+# Ignore SASS items
+.sass-cache
+*/.sass-cache
+scss
+*/.scss
