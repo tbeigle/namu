@@ -11,8 +11,10 @@ features[] = favicon
 regions[header] = Header
 regions[nav] = Navigation
 regions[content_top] = Content Top (title region)
+regions[subhead] = Content Top Subheadline
 regions[sidebar] = Content Left Column
 regions[content] = Content Main
+regions[content_bottom] = Content Main Bottom
 regions[footer] = Footer
 
 ; JS
