@@ -8,6 +8,10 @@ function namu_site_block_info() {
     'info' => t('Site Footer'),
   );
   
+  $blocks['twitter_placeholder'] = array(
+    'info' => t('Twitter Placeholder'),
+  );
+  
   return $blocks;
 }
 
@@ -26,6 +30,19 @@ function namu_site_block_configure($delta = '') {
         '#default_value' => variable_get('namu_site_footer_text', 'North American Marine Underwriters Inc. All Rights Reserved'),
       );
     }
+    case 'twitter_placeholder': {
+      $form['twitter_count'] = array(
+        '#type' => 'select',
+        '#title' => t('Number of Twitter Items to Display'),
+        '#description' => t('Select a number to change the amount of twitter items displayed.'),
+        '#options' => array(),
+        '#default_value' => variable_get('namu_site_twitter_count', 3),
+      );
+      
+      for ($i = 1; $i <= 20; $i++) {
+        $form['twitter_count']['#options'][$i] = $i;
+      } 
+    }
   }
   
   return $form;
@@ -39,6 +56,11 @@ function namu_site_block_save($delta = '', $edit = array()) {
     case 'footer': {
       if (!empty($edit['footer_text'])) {
         variable_set('namu_site_footer_text', $edit['footer_copy']);
+      }
+    }
+    case 'twitter_placeholder': {
+      if (!empty($edit['twitter_count'])) {
+        variable_set('namu_site_twitter_count', $edit['twitter_count']);
       }
     }
   }
@@ -60,6 +82,32 @@ function namu_site_block_view($delta = '') {
         '#prefix' => '<p>',
         '#suffix' => '</p>',
       );
+      
+      break;
+    }
+    case 'twitter_placeholder': {
+      $block['subject'] = t('Latest News');
+      
+      $block['content'] = '<ul class="twitter-feed">';
+      
+      $twitter_count = variable_get('namu_site_twitter_count', 3);
+      
+      for ($i = 0; $i < $twitter_count; $i++) {
+        $block['content'] .=
+          '<li>' . "\n" .
+            '<a class="tweet-at" href="#">@NAMU</a> ' .
+            '<span class="tweet-copy">' .
+              t('Sample tweet will be displayed here') .
+            '</span> ' .
+            '<span class="twitter-date">' .
+              t('December 12, 2013') .
+            '</span>' .
+          '</li>';
+      }
+      
+      $block['content'] .= '</ul>';
+      
+      break;
     }
   }
   
