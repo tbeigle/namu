@@ -373,7 +373,11 @@ ul {
   background-color: #850b2d;
   background-image: url("../../images/banner-left-glossary.jpg"); }
 .has-left-banner.namu-page-applications-index #content {
+  height: 650px;
+  overflow: hidden;
   background-image: url("../../images/banner-left-applications.jpg"); }
+  .has-left-banner.namu-page-applications-index #content > .section {
+    height: 650px; }
 
 #namu-content-bottom {
   padding: 23px 31px 35px 32px; }
@@ -392,7 +396,7 @@ ul {
     padding-top: 14px; }
 
 .applications-list li {
-  margin: 17px 0 0;
+  margin: 15px 0 0;
   font-weight: bold;
   font-size: 18px;
   line-height: 1.25;
