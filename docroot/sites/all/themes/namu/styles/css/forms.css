@@ -9,7 +9,7 @@ FONT SIZES/HEIGHTS
   margin: 0; }
   .form-item .form-radios .form-item {
     display: inline-block;
-    margin: 0 0 0 20px; }
+    margin: 0 0 0 5px; }
     .form-item .form-radios .form-item:first-child {
       margin-left: 0; }
 
@@ -17,30 +17,31 @@ fieldset {
   padding: 0;
   margin: 0;
   border: none; }
+  fieldset legend {
+    padding: 24px 0 9px;
+    margin: 0; }
+  fieldset:first-child legend,
   fieldset fieldset legend {
     padding-top: 0; }
+  fieldset .fieldset-legend {
+    display: block;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 22px; }
+  fieldset fieldset .fieldset-legend {
+    font-weight: normal;
+    font-size: 16px; }
   fieldset fieldset .fieldset-wrapper {
     margin-left: 32px; }
-
-legend {
-  padding: 24px 0 9px;
-  margin: 0; }
-
-.fieldset-legend {
-  display: block;
-  font-weight: bold;
-  font-size: 18px;
-  line-height: 22px; }
-
-fieldset fieldset .fieldset-legend {
-  font-weight: normal;
-  font-weight: normal;
-  font-size: 16px; }
 
 label {
   font-weight: normal;
   font-size: 16px;
   line-height: 23px; }
+
+fieldset fieldset .fieldset-legend .bullet,
+label .bullet {
+  font-weight: bold; }
 
 .webform-container-inline label {
   margin-right: 5px; }
@@ -73,5 +74,14 @@ input[type="text"] {
     .form-actions input[type="submit"]:hover, .form-actions input[type="submit"]:active {
       text-shadow: 0px 0px 6px rgba(255, 255, 255, 0.7); }
 
-.webform-component-markup {
-  margin: 41px 0 13px; }
+.namu-page-form #namu-content-wrapper .webform-component-markup {
+  padding: 0; }
+  .namu-page-form #namu-content-wrapper .webform-component-markup p {
+    margin: 0 0 13px; }
+    .namu-page-form #namu-content-wrapper .webform-component-markup p.form-bottom-disclaimer {
+      margin-top: 41px; }
+
+.namu-form-subhead {
+  font-size: 22px;
+  line-height: 26px;
+  margin: 0; }

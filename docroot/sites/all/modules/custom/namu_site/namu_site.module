@@ -485,7 +485,121 @@ function namu_site_preprocess_block(&$vars) {
 }
 
 /**
- * Implements hook_form_alter()
+ * Implementations of hook_form_FORM_ID_alter()
  */
-function namu_site_form_alter(&$form, &$form_state) {
+function namu_site_form_webform_client_form_2_alter(&$form, &$form_state) {
+  namu_site_build_list_form($form['submitted']);
+}
+function namu_site_form_webform_client_form_3_alter(&$form, &$form_state) {
+  namu_site_build_list_form($form['submitted']);
+}
+function namu_site_form_webform_client_form_4_alter(&$form, &$form_state) {
+  namu_site_build_list_form($form['submitted']);
+}
+function namu_site_form_webform_client_form_5_alter(&$form, &$form_state) {
+  namu_site_build_list_form($form['submitted']);
+}
+function namu_site_form_webform_client_form_6_alter(&$form, &$form_state) {
+  namu_site_build_list_form($form['submitted']);
+}
+
+/**
+ * Loops through form items and builds the list
+ */
+function namu_site_build_list_form(&$form_items, $inner_items = FALSE, $use_number = TRUE) {
+  $bullet_pos = 1;
+  $alpha_level = 0;
+  $types = array('checkboxes','date','fieldset','file','radios','select','textarea','textfield');
+  $alphabet = namu_site_alphabet();
+  
+  foreach ($form_items as &$form_item) {
+    if (empty($form_item['#type']) || empty($form_item['#title'])) continue;
+    if (!in_array($form_item['#type'], $types)) continue;
+    
+    $add_bullet = TRUE;
+    $increment = TRUE;
+    $bullet_attr = array('class' => array('bullet'));
+    
+    if ($use_number) {
+      $bullet = $bullet_pos;
+      $bullet_attr['class'][] = 'number';
+    }
+    else {
+      $bullet = $alphabet[$bullet_pos];
+      
+      if (!empty($alpha_level)) {
+        for ($i = 0; $i < $alpha_level; $i++) {
+          $bullet .= $bullet;
+        }
+      }
+      
+      if ($bullet_pos == 26) {
+        $increment = FALSE;
+        $bullet_pos = 1;
+        $alpha_level++;
+      }
+      
+      $bullet_attr['class'][] = 'letter';
+    }
+    
+    // I agree checkbox
+    if ($form_item['#type'] == 'checkboxes' && !empty($form_item['#options'])) {
+      $option_1 = reset($form_item['#options']);
+      $add_bullet = ($add_bullet && !(count($form_item['#options']) == 1 && stripos($option_1, 'I agree') !== FALSE));
+    }
+    // Fieldsets
+    elseif ($form_item['#type'] == 'fieldset') {
+      $next_use_number = $use_number;
+      $next_inner_items = $inner_items;
+      
+      if ($inner_items) {
+        $next_use_number = !($use_number);
+      }
+      else {
+        $add_bullet = FALSE;
+        $next_inner_items = TRUE;
+      }
+      
+      namu_site_build_list_form($form_item, $next_inner_items, $next_use_number);
+    }
+    
+    if ($add_bullet) {
+      $form_item['#title'] = '<span' . drupal_attributes($bullet_attr) . '>' . $bullet . '.</span> ' . $form_item['#title'];
+      if ($increment) $bullet_pos++;
+    }
+  }
+}
+
+/**
+ * Returns an alphabet array
+ */
+function namu_site_alphabet() {
+  return array(
+    1 => 'a',
+    2 => 'b',
+    3 => 'c',
+    4 => 'd',
+    5 => 'e',
+    6 => 'f',
+    7 => 'g',
+    8 => 'h',
+    9 => 'i',
+    10 => 'j',
+    11 => 'k',
+    12 => 'l',
+    13 => 'm',
+    14 => 'n',
+    15 => 'o',
+    16 => 'p',
+    17 => 'q',
+    18 => 'r',
+    19 => 's',
+    20 => 't',
+    21 => 'u',
+    22 => 'v',
+    23 => 'w',
+    24 => 'x',
+    25 => 'y',
+    26 => 'z',
+  );
 }

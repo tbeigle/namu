@@ -499,3 +499,8 @@ ul {
   padding: 32px 32px 50px; }
   .namu-page-form #namu-content-wrapper p {
     margin: 0; }
+  .namu-page-form #namu-content-wrapper .field-name-body {
+    font-size: 20px;
+    line-height: 1; }
+    .namu-page-form #namu-content-wrapper .field-name-body p {
+      margin-bottom: 30px; }
