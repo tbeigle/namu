@@ -72,10 +72,6 @@ function namu_site_block_info() {
     'info' => t('Homepage Products Panel'),
   );
   
-  $blocks['twitter_placeholder'] = array(
-    'info' => t('Twitter Placeholder'),
-  );
-  
   return $blocks;
 }
 
@@ -199,20 +195,6 @@ function namu_site_block_configure($delta = '') {
       
       break;
     }
-    // Twitter placeholder
-    case 'twitter_placeholder': {
-      $form['twitter_count'] = array(
-        '#type' => 'select',
-        '#title' => t('Number of Twitter Items to Display'),
-        '#description' => t('Select a number to change the amount of twitter items displayed.'),
-        '#options' => array(),
-        '#default_value' => variable_get('namu_site_twitter_count', 3),
-      );
-      
-      for ($i = 1; $i <= 20; $i++) {
-        $form['twitter_count']['#options'][$i] = $i;
-      } 
-    }
   }
   
   return $form;
@@ -226,12 +208,6 @@ function namu_site_block_save($delta = '', $edit = array()) {
     case 'footer': {
       if (!empty($edit['footer_text'])) {
         variable_set('namu_site_footer_text', $edit['footer_copy']);
-      }
-    }
-    
-    case 'twitter_placeholder': {
-      if (!empty($edit['twitter_count'])) {
-        variable_set('namu_site_twitter_count', $edit['twitter_count']);
       }
     }
     // Home top banner
@@ -318,31 +294,6 @@ function namu_site_block_view($delta = '') {
           l(t('Contact Us'), 'node/11'),
         ),
       );
-      
-      break;
-    }
-    // Twitter placeholder
-    case 'twitter_placeholder': {
-      $block['subject'] = t('Latest News');
-      
-      $block['content'] = '<ul class="twitter-feed">';
-      
-      $twitter_count = variable_get('namu_site_twitter_count', 3);
-      
-      for ($i = 0; $i < $twitter_count; $i++) {
-        $block['content'] .=
-          '<li>' . "\n" .
-            '<a class="tweet-at" href="#">@NAMU</a> ' .
-            '<span class="tweet-copy">' .
-              t('Sample tweet will be displayed here') .
-            '</span> ' .
-            '<span class="twitter-date">' .
-              t('December 12, 2013') .
-            '</span>' .
-          '</li>';
-      }
-      
-      $block['content'] .= '</ul>';
       
       break;
     }
@@ -483,6 +434,125 @@ function namu_site_preprocess_block(&$vars) {
     }
   }
 }
+
+/**
+ * Define components to Webform.
+ *
+ * @return
+ *   An array of components, keyed by machine name. Required properties are
+ *   "label" and "description". The "features" array defines which capabilities
+ *   the component has, such as being displayed in e-mails or csv downloads.
+ *   A component like "markup" for example would not show in these locations.
+ *   The possible features of a component include:
+ *
+ *     - csv
+ *     - email
+ *     - email_address
+ *     - email_name
+ *     - required
+ *     - conditional
+ *     - spam_analysis
+ *     - group
+ *
+ *   Note that most of these features do not indicate the default state, but
+ *   determine if the component can have this property at all. Setting
+ *   "required" to TRUE does not mean that a component's fields will always be
+ *   required, but instead give the option to the administrator to choose the
+ *   requiredness. See the example implementation for details on how these
+ *   features may be set.
+ *
+ *   An optional "file" may be specified to be loaded when the component is
+ *   needed. A set of callbacks will be established based on the name of the
+ *   component. All components follow the pattern:
+ *
+ *   _webform_[callback]_[component]
+ *
+ *   Where [component] is the name of the key of the component and [callback] is
+ *   any of the following:
+ *
+ *     - defaults
+ *     - edit
+ *     - render
+ *     - display
+ *     - submit
+ *     - delete
+ *     - help
+ *     - theme
+ *     - analysis
+ *     - table
+ *     - csv_headers
+ *     - csv_data
+ *
+ * See the sample component implementation for details on each one of these
+ * callbacks.
+ *
+ * @see webform_components()
+ */
+/*function namu_site_webform_component_info() {
+  $components = array();
+  
+  $components['dock_schedule'] = array(
+    'label' => t('Dock Schedule'),
+    'description' => t('Custom NAMU ta
+  );
+
+  $components['textfield'] = array(
+    'label' => t('Textfield'),
+    'description' => t('Basic textfield type.'),
+    'features' => array(
+      // Add content to CSV downloads. Defaults to TRUE.
+      'csv' => TRUE,
+
+      // This component supports default values. Defaults to TRUE.
+      'default_value' => FALSE,
+
+      // This component supports a description field. Defaults to TRUE.
+      'description' => FALSE,
+
+      // Show this component in e-mailed submissions. Defaults to TRUE.
+      'email' => TRUE,
+
+      // Allow this component to be used as an e-mail FROM or TO address.
+      // Defaults to FALSE.
+      'email_address' => FALSE,
+
+      // Allow this component to be used as an e-mail SUBJECT or FROM name.
+      // Defaults to FALSE.
+      'email_name' => TRUE,
+
+      // This component may be toggled as required or not. Defaults to TRUE.
+      'required' => TRUE,
+
+      // This component supports a title attribute. Defaults to TRUE.
+      'title' => FALSE,
+
+      // This component has a title that can be toggled as displayed or not.
+      'title_display' => TRUE,
+
+      // This component has a title that can be displayed inline.
+      'title_inline' => TRUE,
+
+      // If this component can be used as a conditional SOURCE. All components
+      // may always be displayed conditionally, regardless of this setting.
+      // Defaults to TRUE.
+      'conditional' => TRUE,
+
+      // If this component allows other components to be grouped within it
+      // (like a fieldset or tabs). Defaults to FALSE.
+      'group' => FALSE,
+
+      // If this component can be used for SPAM analysis, usually with Mollom.
+      'spam_analysis' => FALSE,
+
+      // If this component saves a file that can be used as an e-mail
+      // attachment. Defaults to FALSE.
+      'attachment' => FALSE,
+    ),
+    'file' => 'components/textfield.inc',
+  );
+
+  return $components;
+}*/
 
 /**
  * Implementations of hook_form_FORM_ID_alter()
