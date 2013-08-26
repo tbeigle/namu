@@ -513,3 +513,10 @@ ul {
     line-height: 1; }
     .namu-page-form #namu-content-wrapper .field-name-body p {
       margin-bottom: 30px; }
+  .namu-page-form #namu-content-wrapper .field-name-field-app-hard-copy {
+    font-size: 20px;
+    line-height: 1; }
+    .namu-page-form #namu-content-wrapper .field-name-field-app-hard-copy p {
+      position: relative;
+      top: -15px;
+      margin-bottom: 15px; }
