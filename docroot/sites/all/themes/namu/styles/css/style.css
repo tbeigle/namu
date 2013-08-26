@@ -204,6 +204,7 @@ ul {
 .lists-container li {
   padding: 8px 20px 0 164px;
   font-size: 18px;
+  text-transform: capitalize;
   color: #002a5c; }
   .lists-container li.bg-preserver ul li:first-child, .lists-container li.bg-anchor ul li:first-child {
     padding-right: 52px; }
