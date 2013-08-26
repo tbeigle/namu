@@ -61,10 +61,11 @@ function namu_app_field_default_field_instances() {
     'description' => '',
     'display' => array(
       'default' => array(
-        'label' => 'above',
+        'label' => 'hidden',
+        'module' => 'file',
         'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 2,
+        'type' => 'file_url_plain',
+        'weight' => 1,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -131,7 +132,7 @@ function namu_app_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 1,
+        'weight' => 3,
       ),
       'teaser' => array(
         'label' => 'above',

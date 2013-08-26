@@ -19,11 +19,10 @@ function namu_app_default_box() {
   $box->description = 'Marketing Materials';
   $box->options = array(
     'body' => array(
-      'value' => '<p class="marketing-materials-item">Comprehensive Solutions for Marinas, Boat Dealers and Yacht Clubs</p>
-
-<p class="marketing-materials-item">Comprehensive Insurance for Marinas, Boat Dealers, Yacht Clubs, Boat Builders, Marine Artisans, and Maritime Museums</p>',
+      'value' => '<p class="marketing-materials-item"><a href="/downloads/HanoverBrochure.pdf" target="_blank">Download Agent Brochure</a></p>',
       'format' => 'filtered_html',
     ),
+    'additional_classes' => '',
   );
   $export['marketing_materials'] = $box;
 

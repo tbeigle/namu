@@ -42,16 +42,15 @@ function namu_app_views_default_views() {
   $handler->display->display_options['fields']['title']['table'] = 'node';
   $handler->display->display_options['fields']['title']['field'] = 'title';
   $handler->display->display_options['fields']['title']['label'] = '';
-  $handler->display->display_options['fields']['title']['exclude'] = TRUE;
   $handler->display->display_options['fields']['title']['alter']['word_boundary'] = FALSE;
   $handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
   $handler->display->display_options['fields']['title']['element_label_colon'] = FALSE;
-  $handler->display->display_options['fields']['title']['link_to_node'] = FALSE;
   /* Field: Content: Hard Copy */
   $handler->display->display_options['fields']['field_app_hard_copy']['id'] = 'field_app_hard_copy';
   $handler->display->display_options['fields']['field_app_hard_copy']['table'] = 'field_data_field_app_hard_copy';
   $handler->display->display_options['fields']['field_app_hard_copy']['field'] = 'field_app_hard_copy';
   $handler->display->display_options['fields']['field_app_hard_copy']['label'] = '';
+  $handler->display->display_options['fields']['field_app_hard_copy']['exclude'] = TRUE;
   $handler->display->display_options['fields']['field_app_hard_copy']['alter']['alter_text'] = TRUE;
   $handler->display->display_options['fields']['field_app_hard_copy']['alter']['text'] = '<a href="[field_app_hard_copy]" target="_blank">[title]</a>';
   $handler->display->display_options['fields']['field_app_hard_copy']['element_label_colon'] = FALSE;
