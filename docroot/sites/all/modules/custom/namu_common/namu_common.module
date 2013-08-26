@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the NAMU Common feature.
+ */
+
+include_once 'namu_common.features.inc';
