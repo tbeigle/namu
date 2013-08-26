@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the NAMU Products and Services feature.
+ */
+
+include_once 'namu_products.features.inc';
