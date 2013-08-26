@@ -1,5 +1,5 @@
 name = NAMU Site Module
 description = Custom module to handle miscellaneous items for the NAMU website.
 core = 7.x
-package = namu
+package = NAMU
 dependencies[] = webform

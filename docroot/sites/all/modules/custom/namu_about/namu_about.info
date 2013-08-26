@@ -1,0 +1,11 @@
+name = NAMU About Us
+core = 7.x
+package = NAMU
+dependencies[] = context
+dependencies[] = views
+features[context][] = about_us
+features[ctools][] = context:context:3
+features[ctools][] = views:views_default:3.0
+features[features_api][] = api:2
+features[views_view][] = namu_twitter_feed
+features_exclude[dependencies][ctools] = ctools
