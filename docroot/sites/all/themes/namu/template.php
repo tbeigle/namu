@@ -45,3 +45,14 @@ function namu_preprocess_page(&$vars) {
     $vars['namu_attributes']['content_top']['class'][] = 'with-subhead';
   }
 }
+
+/**
+ * Implements template_preprocess_field()
+ */
+function namu_preprocess_field(&$vars) {
+  $field_name = !empty($vars['element']['#field_name']) ? $vars['element']['#field_name'] : '';
+  if ($field_name != 'field_app_hard_copy' || empty($vars['items'][0]['#markup'])) return;
+  
+  $markup = '<p class="download-printable-form">' . t('To download a printable version of the form, ') . l(t('click here'), strip_tags($vars['items'][0]['#markup'])) . '</p>';
+  $vars['items'][0]['#markup'] = $markup;
+}
