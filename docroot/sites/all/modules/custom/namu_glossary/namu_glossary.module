@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the NAMU Glossary feature.
+ */
+
+include_once 'namu_glossary.features.inc';
