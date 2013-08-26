@@ -88,7 +88,7 @@ ul {
     margin: 0; }
     #navigation .menu li a:link, #navigation .menu li a:visited {
       display: block;
-      padding: 0 22px 0 22px;
+      padding: 0 21px 0 22px;
       border-left: 2px solid #fff;
       font: bold 18px quicksand, Arial, Helvetica, sans-serif;
       color: #002a5c;
@@ -204,6 +204,7 @@ ul {
 .lists-container li {
   padding: 8px 20px 0 164px;
   font-size: 18px;
+  text-transform: capitalize;
   color: #002a5c; }
   .lists-container li.bg-preserver ul li:first-child, .lists-container li.bg-anchor ul li:first-child {
     padding-right: 52px; }
@@ -369,11 +370,19 @@ ul {
     border-left: 3px solid #840a2d; }
 .has-left-banner.namu-page-about-us #content {
   background-image: url("../../images/banner-left-about.jpg"); }
+.has-left-banner.namu-page-about-us #content,
+.has-left-banner.namu-page-about-us #content > .section {
+  height: 667px;
+  overflow: hidden; }
 .has-left-banner.namu-page-glossary #content {
   background-color: #850b2d;
   background-image: url("../../images/banner-left-glossary.jpg"); }
 .has-left-banner.namu-page-applications-index #content {
   background-image: url("../../images/banner-left-applications.jpg"); }
+.has-left-banner.namu-page-applications-index #content,
+.has-left-banner.namu-page-applications-index #content > .section {
+  height: 650px;
+  overflow: hidden; }
 
 #namu-content-bottom {
   padding: 23px 31px 35px 32px; }
@@ -392,7 +401,7 @@ ul {
     padding-top: 14px; }
 
 .applications-list li {
-  margin: 17px 0 0;
+  margin: 15px 0 0;
   font-weight: bold;
   font-size: 18px;
   line-height: 1.25;
