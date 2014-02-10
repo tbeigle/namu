@@ -207,7 +207,7 @@ function namu_site_block_save($delta = '', $edit = array()) {
   switch ($delta) {
     case 'footer': {
       if (!empty($edit['footer_text'])) {
-        variable_set('namu_site_footer_text', $edit['footer_copy']);
+        variable_set('namu_site_footer_text', $edit['footer_text']);
       }
     }
     // Home top banner
